@@ -14,10 +14,12 @@ public class Unidad : MonoBehaviour
     private float distancia_punto;
     private bool esta_viva;
     private float tiempo;
+    [SerializeField]
     private int vidas;
+    private float delta_vida;
     private Vector3 posicion_muerte;
-    private Animator controlador;
-
+    //private Animator controlador;
+    private LogicaBarra lb;
     public bool Esta_viva { get => esta_viva; set => esta_viva = value; }
 
 
@@ -30,21 +32,37 @@ public class Unidad : MonoBehaviour
 
     {
         vel = 2f;
-        vidas = 3;
+        delta_vida = 1f / vidas;
         distancia_punto = .1f;
         esta_viva = true;
         posicion_inicial = this.transform.position;
         posicion_siguiente = ruta.transform.GetChild(0);
         //controlador = this.GetComponent<Animator>();
+        lb = this.GetComponent<LogicaBarra>();
 
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "bala")
+        Bala bala; 
+        if (vidas > 0)
         {
-            Destroy(other.gameObject);
+            if (other.gameObject.tag == "bala")
+            {
+                bala = other.gameObject.GetComponent<Bala>();
+                bala.Disparada = false;
+                if (--vidas == 0)
+                {
+                    esta_viva = false;
+                    Debug.Log("se murio");
+                }
+                /*else
+                {
+                    lb.ModificarBarra(delta_vida);
+                }*/
+            }
         }
+       
     }
     
 
@@ -107,7 +125,7 @@ public class Unidad : MonoBehaviour
             {
                 direccion = Direccion.derecha;
             }
-            controlador.SetInteger("direccion", direccion);
+            //controlador.SetInteger("direccion", direccion);
 
 
 
