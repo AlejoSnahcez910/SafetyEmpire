@@ -10,15 +10,18 @@ public class Unidad : MonoBehaviour
     private Vector2 posicion_inicial;
     private Transform posicion_siguiente;
     private Transform posicion_actual;
+    [SerializeField]
     private float vel;
     private float distancia_punto;
     private bool esta_viva;
     private float tiempo;
     [SerializeField]
+    private int valor_muerte;
+    [SerializeField]
     private int vidas;
     private float delta_vida;
     private Vector3 posicion_muerte;
-    //private Animator controlador;
+   
     private LogicaBarra lb;
     public bool Esta_viva { get => esta_viva; set => esta_viva = value; }
 
@@ -37,14 +40,14 @@ public class Unidad : MonoBehaviour
         esta_viva = true;
         posicion_inicial = this.transform.position;
         posicion_siguiente = ruta.transform.GetChild(0);
-        //controlador = this.GetComponent<Animator>();
+        
         lb = this.GetComponent<LogicaBarra>();
 
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Bala bala; 
+        Bala bala;
         if (vidas > 0)
         {
             if (other.gameObject.tag == "bala")
@@ -55,6 +58,7 @@ public class Unidad : MonoBehaviour
                 {
                     esta_viva = false;
                     Debug.Log("se murio");
+                    Hud.ActualizarMoneda(valor_muerte);
                 }
                 else
                 {
@@ -62,9 +66,9 @@ public class Unidad : MonoBehaviour
                 }
             }
         }
-       
+
     }
-    
+
 
     void Update()
     {
@@ -76,14 +80,14 @@ public class Unidad : MonoBehaviour
             // this.transform.position += dir * vel * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, posicion_siguiente.position, vel * Time.deltaTime);
 
-            if (Vector2.Distance(transform.position,posicion_siguiente.position)<distancia_punto)
+            if (Vector2.Distance(transform.position, posicion_siguiente.position) < distancia_punto)
             {
                 if (indice + 1 < ruta.transform.childCount)
                 {
                     indice++;
                     posicion_actual = posicion_siguiente;
                     posicion_siguiente = ruta.transform.GetChild(indice);
-                   //CambiarPosicion();
+                    CambiarPosicion();
                 }
                 else
                 {
@@ -91,50 +95,56 @@ public class Unidad : MonoBehaviour
                     transform.position = posicion_inicial;
                     posicion_siguiente = ruta.transform.GetChild(0);
                     posicion_actual = null;
-                    
+
                 }
             }
         }
-       
+
     }
 
-   /* private void CambiarPosicion()
+    private void CambiarPosicion()
     {
-        int direccion = 1;
+        
         Direccion mira_hacia;
 
-        if(posicion_actual != null)
+        if (posicion_actual != null)
         {
             mira_hacia = posicion_actual.GetComponent<Direccion>();
             if (mira_hacia.Ubicacion == Direccion.arriba)
             {
-                direccion = Direccion.arriba;
+                transform.rotation = Quaternion.Euler(0, 0, 90);
+               // Debug.Log("arriba");
+
             }
             mira_hacia = posicion_actual.GetComponent<Direccion>();
             if (mira_hacia.Ubicacion == Direccion.abajo)
             {
-                direccion = Direccion.abajo;
+                //Debug.Log("abajo");
+                transform.rotation = Quaternion.Euler(0, 0, -90);
             }
             mira_hacia = posicion_actual.GetComponent<Direccion>();
             if (mira_hacia.Ubicacion == Direccion.izquierda)
             {
-                direccion = Direccion.izquierda;
+                transform.rotation = Quaternion.Euler(0, 0, 180);
+                //Debug.Log("izquierda");
+
             }
             mira_hacia = posicion_actual.GetComponent<Direccion>();
             if (mira_hacia.Ubicacion == Direccion.derecha)
             {
-                direccion = Direccion.derecha;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                //Debug.Log("derecha");
+
             }
-            //controlador.SetInteger("direccion", direccion);
+            
 
-
-
+        
         }
 
 
-    
+
 
     }
-    */
 }
+    
 
