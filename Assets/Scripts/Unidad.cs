@@ -16,6 +16,7 @@ public class Unidad : MonoBehaviour
     private float tiempo;
     private int vidas;
     private Vector3 posicion_muerte;
+    private Animator controlador;
 
     public bool Esta_viva { get => esta_viva; set => esta_viva = value; }
 
@@ -33,7 +34,8 @@ public class Unidad : MonoBehaviour
         distancia_punto = .1f;
         esta_viva = true;
         posicion_inicial = this.transform.position;
-        posicion_siguiente = ruta.transform.GetChild(0); 
+        posicion_siguiente = ruta.transform.GetChild(0);
+        //controlador = this.GetComponent<Animator>();
 
     }
 
@@ -80,7 +82,7 @@ public class Unidad : MonoBehaviour
 
     private void CambiarPosicion()
     {
-        
+        int direccion = 1;
         Direccion mira_hacia;
 
         if(posicion_actual != null)
@@ -88,8 +90,24 @@ public class Unidad : MonoBehaviour
             mira_hacia = posicion_actual.GetComponent<Direccion>();
             if (mira_hacia.Ubicacion == Direccion.arriba)
             {
-                
+                direccion = Direccion.arriba;
             }
+            mira_hacia = posicion_actual.GetComponent<Direccion>();
+            if (mira_hacia.Ubicacion == Direccion.abajo)
+            {
+                direccion = Direccion.abajo;
+            }
+            mira_hacia = posicion_actual.GetComponent<Direccion>();
+            if (mira_hacia.Ubicacion == Direccion.izquierda)
+            {
+                direccion = Direccion.izquierda;
+            }
+            mira_hacia = posicion_actual.GetComponent<Direccion>();
+            if (mira_hacia.Ubicacion == Direccion.derecha)
+            {
+                direccion = Direccion.derecha;
+            }
+            controlador.SetInteger("direccion", direccion);
 
 
 
