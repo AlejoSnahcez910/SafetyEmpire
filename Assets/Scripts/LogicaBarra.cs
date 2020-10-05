@@ -8,12 +8,13 @@ public class LogicaBarra : MonoBehaviour
    
 
     [SerializeField]
-    private GameObject barraVerde;
+    private GameObject  barraVerde;
 
     [SerializeField]
     private GameObject barraRoja;
 
-    
+    //private float escala_actual; // = .001f
+
     SpriteRenderer sr;
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,10 @@ public class LogicaBarra : MonoBehaviour
         if (sr.transform.localScale.x > 0)
         {
             sr.transform.localScale -= new Vector3(escala, 0);
+        }
+        else
+        {
+            // disparar evento muerte
         }
     }
 }

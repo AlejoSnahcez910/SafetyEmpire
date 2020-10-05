@@ -98,7 +98,7 @@ public class Unidad : MonoBehaviour
        
     }
 
-    private void CambiarPosicion()
+   /* private void CambiarPosicion()
     {
         int direccion = 1;
         Direccion mira_hacia;
@@ -132,9 +132,9 @@ public class Unidad : MonoBehaviour
         }
 
 
-
+    
 
     }
-
+    */
 }
 
