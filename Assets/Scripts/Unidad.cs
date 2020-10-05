@@ -60,10 +60,11 @@ public class Unidad : MonoBehaviour
                     Debug.Log("se murio");
                     Hud.ActualizarMoneda(valor_muerte);
                 }
-                else
+                /*else
                 {
                     lb.ModificarBarra(delta_vida);
                 }
+                */ 
             }
         }
 
@@ -87,7 +88,7 @@ public class Unidad : MonoBehaviour
                     indice++;
                     posicion_actual = posicion_siguiente;
                     posicion_siguiente = ruta.transform.GetChild(indice);
-                    CambiarPosicion();
+                    //CambiarPosicion();
                 }
                 else
                 {
@@ -102,7 +103,7 @@ public class Unidad : MonoBehaviour
 
     }
 
-    private void CambiarPosicion()
+    /*private void CambiarPosicion()
     {
         
         Direccion mira_hacia;
@@ -113,6 +114,7 @@ public class Unidad : MonoBehaviour
             if (mira_hacia.Ubicacion == Direccion.arriba)
             {
                 transform.rotation = Quaternion.Euler(0, 0, 90);
+               
                // Debug.Log("arriba");
 
             }
@@ -121,14 +123,9 @@ public class Unidad : MonoBehaviour
             {
                 //Debug.Log("abajo");
                 transform.rotation = Quaternion.Euler(0, 0, -90);
+               
             }
-            mira_hacia = posicion_actual.GetComponent<Direccion>();
-            if (mira_hacia.Ubicacion == Direccion.izquierda)
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 180);
-                //Debug.Log("izquierda");
-
-            }
+          
             mira_hacia = posicion_actual.GetComponent<Direccion>();
             if (mira_hacia.Ubicacion == Direccion.derecha)
             {
@@ -141,10 +138,11 @@ public class Unidad : MonoBehaviour
         
         }
 
-
+    
 
 
     }
+    */
 }
-    
+
 
