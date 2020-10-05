@@ -1,32 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class LogicaBarra : MonoBehaviour
 {
-
-   
-
     [SerializeField]
-    private GameObject  barraVerde;
-
+    private GameObject barra_verde;
     [SerializeField]
-    private GameObject barraRoja;
+    private GameObject barra_roja;
+    //private float escala_actual;// = .001f
+    private SpriteRenderer sr;
 
-    //private float escala_actual; // = .001f
-
-    SpriteRenderer sr;
-    // Start is called before the first frame update
+    // Use this for initialization
     void Start()
     {
-        sr = barraVerde.GetComponent<SpriteRenderer>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-     
-        
+        sr = barra_verde.GetComponent<SpriteRenderer>();
     }
 
     public void ModificarBarra(float escala)
@@ -37,7 +24,12 @@ public class LogicaBarra : MonoBehaviour
         }
         else
         {
-            // disparar evento muerte
+            //Disparar evento de muerte
         }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }
