@@ -21,6 +21,7 @@ public class Unidad : MonoBehaviour
     private int vidas;
     private float delta_vida;
     private Vector3 posicion_muerte;
+    private Hud hud;
    
     private LogicaBarra lb;
     public bool Esta_viva { get => esta_viva; set => esta_viva = value; }
@@ -44,39 +45,13 @@ public class Unidad : MonoBehaviour
         lb = this.GetComponent<LogicaBarra>();
 
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Bala bala;
-        if (vidas > 0)
-        {
-            if (other.gameObject.tag == "bala")
-            {
-                bala = other.gameObject.GetComponent<Bala>();
-                bala.Disparada = false;
-                if (--vidas == 0)
-                {
-                    esta_viva = false;
-                    Debug.Log("se murio");
-                    Hud.ActualizarMoneda(valor_muerte);
-                }
-                /*else
-                {
-                    lb.ModificarBarra(delta_vida);
-                }
-                */ 
-            }
-        }
-
-    }
-
-
     void Update()
     {
-
+        hud = Hud.GetInstance();
 
         if (Esta_viva)
         {
+
             //Vector3 dir = posicion_siguiente - this.transform.position;
             // this.transform.position += dir * vel * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, posicion_siguiente.position, vel * Time.deltaTime);
@@ -102,6 +77,34 @@ public class Unidad : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Bala bala;
+        if (vidas > 0)
+        {
+            if (other.gameObject.tag == "bala")
+            {
+                bala = other.gameObject.GetComponent<Bala>();
+                bala.Disparada = false;
+                if (--vidas == 0)
+                {
+                    esta_viva = false;
+                    Debug.Log("se murio");
+                    hud.ActualizarMoneda(valor_muerte);
+                }
+                /*else
+                {
+                    lb.ModificarBarra(delta_vida);
+                }
+                */ 
+            }
+        }
+
+    }
+
+
+    
 
     /*private void CambiarPosicion()
     {

@@ -11,6 +11,13 @@ public class Torre : MonoBehaviour
     private float distancia_umbral;
     private float tiempo_disparo;
     private GameObject[] balas;
+    private int valor_actual;
+
+    public Torre()
+    {
+        Valor_actual= 150;
+    }
+
 
 
     void Start()
@@ -82,9 +89,23 @@ public class Torre : MonoBehaviour
 
 
     public GameObject Enemigo { get => enemigo; set => enemigo = value; }
+    public int Valor_actual { get => valor_actual; set => valor_actual = value; }
+    public bool Esta_activa
+    {
+        get
+        {
+            return esta_activa;
+        }
 
-    
+        set
+        {
+            esta_activa = value;
+
+        }
+
+    }
+
 
     // Update is called once per frame
-   
+
 }
