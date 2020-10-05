@@ -56,10 +56,10 @@ public class Unidad : MonoBehaviour
                     esta_viva = false;
                     Debug.Log("se murio");
                 }
-                /*else
+                else
                 {
                     lb.ModificarBarra(delta_vida);
-                }*/
+                }
             }
         }
        

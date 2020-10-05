@@ -7,21 +7,63 @@ public class Torre : MonoBehaviour
     // Start is called before the first frame update
 
     private GameObject enemigo;
-    private float distancia_umbral = 4.3f;
+    private bool esta_activa;
+    private float distancia_umbral;
+    private float tiempo_disparo;
+    private GameObject[] balas;
+
 
     void Start()
     {
+        distancia_umbral = 1.5f;
+        tiempo_disparo = .8f;
+        crearBalas(5);
 
     }
     void Update()
     {
         Enemigo = BuscarEnemigoCercano();
-        if (Enemigo != null)
+        if (Enemigo != null&& tiempo_disparo <= 0)
         {
             Disparar();
             Debug.DrawLine(this.transform.position, enemigo.transform.position, Color.yellow);
+            tiempo_disparo = 1f;
+        }
+        else
+        {
+            tiempo_disparo -= Time.deltaTime;
         }
     }
+
+    private void crearBalas(int totalBalas)
+    {
+        balas = new GameObject[totalBalas];
+        for (int i = 0; i < balas.Length; i++)
+        {
+            balas[i] = Instantiate(GameObject.Find("bala"), this.transform.position, Quaternion.identity);
+        }
+    }
+
+    private Bala DespacharBalaLibre()
+    {
+        Bala libre = null;
+        for (int i = 0; i < balas.Length ; i++)
+        {
+            libre = balas[i].GetComponent<Bala>();
+            if (!libre.Disparada)
+            {
+                break;
+            }
+        }
+        return libre;
+
+    }
+    void Disparar()
+    {
+        Bala bala = DespacharBalaLibre();
+        bala.ActivarBala(this);
+    }
+
     GameObject BuscarEnemigoCercano()
     {
         ArrayList enemigos = PoolingUnidades.enemigos;
@@ -38,12 +80,6 @@ public class Torre : MonoBehaviour
 
     }
 
-    void Disparar()
-    {
-        GameObject obj = (GameObject)Instantiate(GameObject.Find("bala"), this.transform.position, Quaternion.identity);
-        Bala bala = obj.GetComponent<Bala>();
-        bala.ActivarBala(this);
-    }
 
     public GameObject Enemigo { get => enemigo; set => enemigo = value; }
 
